@@ -1,0 +1,57 @@
+<table name="categoriesTree">
+    <tr>
+        <th width="30%">Nom de la catégorie</th>
+        <th width="20%"></th>
+        <th width="10%"></th>
+        <th width="10%"></th>
+        <th width="10%"></th>
+
+    </tr>
+{% for category in listCategoriesAsTree %}
+<tr>
+    <td>{{ category.treeview }} <strong>{{ category.title }}</strong></td>
+    <td></td>
+    <td><!--{{ category.indentation }}--></td>
+    <td>
+      <a href="{{ url('admineditcategory') }}{{ category.category_id }}" >Éditer</a>
+    </td>
+    <td>
+      <a href="{{ url('adminproductsCategory') }}{{ category.category_id }}" >Produits</a>
+    </td>
+</tr>
+{% endfor %}
+</table>
+<hr />
+<form action="{{ url('parentcategories')}}" method="POST">
+<table name="categories">
+    <tr>
+        <th width="5%"></th>
+        <th width="10%">Code</th>
+        <th width="40%">Titre</th>
+        <th width="10%">Ordre</th>
+        <th width="20%">Action</th>
+    </tr>
+{% for category in categories %}
+<tr>
+    <td><input type="checkbox" name="category_ids[]" value="{{ category.getid() }}" /></td>
+    <td>{{ category.getid() }} - [ {{ category.getLeftValue() }} ] [ {{ category.getRightValue() }} ]</td>
+    <td>{{ category.getTitle() }}</td>
+    <td>{{ category.getDisplayorder() }}</td>
+    <td><a href="{{ url('admineditcategory') }}{{ category.getId() }}" >Éditer</a></td>
+</tr>
+{% endfor %}
+</table>
+<hr />
+<select name="parent_id">
+    {% for category in categories %}
+        <option value="{{ category.getid() }}">{{ category.getTitle() }}</option>
+    {% endfor %}
+</select>
+<input type="submit" name="chooseParent" value="Choisir le parent" />
+</form>
+<p>
+    <a href="{{ url('admineditcategory') }}" >Ajouter une catégorie</a>|
+    <a href="{{ url('adminproductslist') }}">Listing produits</a>
+
+    </p>
+</p>

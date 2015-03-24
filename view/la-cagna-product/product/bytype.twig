@@ -1,0 +1,14 @@
+<hr />
+{% for product in products %}
+<article class="product " itemscope="" itemtype="http://schema.org/Product">
+<span itemprop="title"><strong>{{ product.getTitle() }}</strong></span>
+<p>
+<span itemprop="description">{{ product.getDescription() }}</span>
+<p>
+{% if product.getMainMedia() %}
+    <img src="{{ thumb().getSlug(product.getMainMedia().slug(),120) }}" />
+{% endif %}
+
+</article>
+<hr />
+{% endfor %}
